@@ -1,0 +1,188 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.3", import: ["@key"])
+
+"""
+The root Query type, on which all top-level fields should be defined.
+"""
+type Query {
+  """
+  Write your root-level queries here
+  """
+  hello: String!
+}
+
+####################################################################################################
+# TODO: Remove any common scalars and interfaces below that you do not need to prevent Lint errors
+####################################################################################################
+
+####################################################################################################
+# Common Custom Scalars
+####################################################################################################
+
+"""
+A date string, such as `2007-12-03`, is compliant with the full-date format outlined in section 5.6
+of the [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) profile of the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) standard for the representation of dates and times using the
+Gregorian calendar.
+"""
+scalar Date
+
+"""
+A date-time string at UTC, such as `2007-12-03T10:15:30Z`, is compliant with the date-time format
+outlined in section 5.6 of the [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) profile of the [ISO 8601 standard](https://en.wikipedia.org/wiki/ISO_8601) for representation of dates
+and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+####################################################################################################
+# Common Error Interface
+####################################################################################################
+
+"""
+The common error interface that must be implemented in federated subgraphs. See additional error
+handling documentation in the
+[Enterprise GraphQL Standards](https://confluence.fmr.com/display/PR172802/GraphQL+Design+and+Development+Standards+-+DRAFT#GraphQLDesignandDevelopmentStandardsDRAFT-ErrorHandling).
+"""
+interface Error {
+  """
+  The error codes defined by the application domain within the federated subgraph.
+  """
+  code: String!
+
+  """
+  A human-readable explanation specific to the occurrence of the problem. This field's value can be
+  localized
+  """
+  detail: String!
+
+  """
+  Optional array of objects that contains references to useful information about the error (for
+  example, help documentation, knowledge base, etc.)
+  """
+  links: [ErrorLink]
+
+  """
+  Optional array of objects to provide more information about the error in question. For example, a
+  parameter may pinpoint the exact field that caused the error or some other metadata.
+  """
+  parameters: [ErrorParameter]
+
+  """
+  A string containing references to the source of the error. For example, a JSON reference or a
+  string indicating which URI query parameter caused the error.
+  """
+  source: String
+
+  """
+  A short human-readable summary of the problem that should not change from occurrence to occurrence
+  of the problem, except for purposes of localization.
+  """
+  title: String!
+}
+
+"""
+A reference to useful information about the error (for example, help documentation, knowledge base,
+etc.)
+"""
+interface ErrorLink {
+  """
+  A short description of the linked document.
+  """
+  description: String
+
+  """
+  The href attribute defines a link to a resource as a reference URL, see
+  [HTML href](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/href)
+  for more details. In this context the URL should provide useful
+  information about the error.
+  """
+  href: String
+
+  """
+  The rel attribute specifies the relationship between the current document and the linked document,
+  see [HTML rel](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel) for more details.
+  """
+  rel: String
+
+  """
+  The type of document that the link references, e.g.: FAQ, Help Docs, etc.
+  """
+  type: String!
+}
+
+"""
+Key value pair that gives more information about the error and may help pinpoint the exact field
+that caused the error.
+"""
+interface ErrorParameter {
+  """
+  The key in the key/value pair.
+  """
+  name: String!
+
+  """
+  The error parameter type, e.g. 'path' to the error.
+  """
+  type: String!
+
+  """
+  The value in the key/value pair.
+  """
+  value: String
+}
+
+####################################################################################################
+# GraphQL Cursor Connections Specification Interfaces
+####################################################################################################
+
+"""
+Types should implement this interface when they have a globally unique identifier. It tells clients
+that the type can be cached by its `id` field. All uniquely identifiable entity types should
+implement this interface.
+"""
+interface Node {
+  id: ID!
+}
+
+"""
+The [Cursor Connection Specification](https://relay.dev/graphql/connections.htm#) compliant
+Connection interface. This type contains the paginated list in the `edges` field and additional
+metadata about the pagination process in the `pageInfo` field.
+
+For more info, see:
+
+* Cursor Connection Specification [Connection Types](https://relay.dev/graphql/connections.htm#sec-Connection-Types)
+* Enterprise standards on [Pagination](https://confluence.fmr.com/display/PR172802/GraphQL+Design+and+Development+Standards+-+DRAFT#GraphQLDesignandDevelopmentStandardsDRAFT-Pagination).
+"""
+interface PageConnection {
+  edges: [PageEdge!]
+  pageInfo: PageInfo!
+}
+
+"""
+A type that is returned in list form by a connection type’s edges field is considered by this spec
+to be an Edge Type.
+
+For more info, see:
+
+* Cursor Connection Specification [Edge Types](https://relay.dev/graphql/connections.htm#sec-Edge-Types)
+* Enterprise standards on [Pagination](https://confluence.fmr.com/display/PR172802/GraphQL+Design+and+Development+Standards+-+DRAFT#GraphQLDesignandDevelopmentStandardsDRAFT-Pagination).
+"""
+interface PageEdge {
+  cursor: String!
+  node: Node!
+}
+
+"""
+The [Cursor Connection Specification](https://relay.dev/graphql/connections.htm#) compliant PageInfo
+interface that continas metadata about the paginated query.
+
+For more info, see:
+
+* Cursor Connection Specification [PageInfo Types](https://relay.dev/graphql/connections.htm#sec-undefined.PageInfo)
+* Enterprise standards on [Pagination](https://confluence.fmr.com/display/PR172802/GraphQL+Design+and+Development+Standards+-+DRAFT#GraphQLDesignandDevelopmentStandardsDRAFT-Pagination).
+"""
+interface PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}

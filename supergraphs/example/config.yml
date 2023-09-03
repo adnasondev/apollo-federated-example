@@ -1,0 +1,5 @@
+metadata:
+  applicationId: ap159574
+subgraphs:
+  - path: subgraphs/course/src/main/resources/graphql
+  - path: subgraphs/review/src/main/resources/graphql

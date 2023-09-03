@@ -1,0 +1,19 @@
+type Query {
+    reviews: Reviews
+}
+
+type Course @key(fields: "id") {
+    id: ID!,
+    review: Review,
+}
+
+type Reviews {
+    reviews: [Review],
+}
+
+type Review {
+    courseId: Int,
+    reviewerName: String,
+    rating: Int,
+    comment: String
+}
