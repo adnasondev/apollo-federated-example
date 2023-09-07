@@ -22,7 +22,7 @@ public class CourseController {
     ).collect(Collectors.toMap(Course::getId, course->course));
 
     @QueryMapping
-    public Course course(@NotNull @Argument String id) {
+    public Course course(@Argument String id) {
         return courses.get(id);
     }
 

@@ -23,7 +23,7 @@ type Course
   @join__type(graph: SUBGRAPHS_COURSE_SRC_MAIN_RESOURCES_GRAPHQL, key: "id")
   @join__type(graph: SUBGRAPHS_REVIEW_SRC_MAIN_RESOURCES_GRAPHQL, key: "id")
 {
-  id: ID!
+  id: ID
   name: String @join__field(graph: SUBGRAPHS_COURSE_SRC_MAIN_RESOURCES_GRAPHQL)
   category: String @join__field(graph: SUBGRAPHS_COURSE_SRC_MAIN_RESOURCES_GRAPHQL)
   review: Review @join__field(graph: SUBGRAPHS_REVIEW_SRC_MAIN_RESOURCES_GRAPHQL)

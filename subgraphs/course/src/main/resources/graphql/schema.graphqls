@@ -1,14 +1,10 @@
 type Query {
-    course(String: ID!): Course,
-    courses: Courses,
-}
-
-type Courses {
-    courses: [Course],
+    course(id: ID!): Course
+    courses: [Course]
 }
 
 type Course @key(fields: "id") {
-    id: ID!,
-    name: String,
-    category: String,
+    id: ID
+    name: String
+    category: String
 }

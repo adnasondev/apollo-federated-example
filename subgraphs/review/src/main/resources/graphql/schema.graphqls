@@ -1,14 +1,6 @@
-type Query {
-    reviews: Reviews
-}
-
-type Course @key(fields: "id") {
-    id: ID!,
-    review: Review,
-}
-
-type Reviews {
-    reviews: [Review],
+type Course @key(fields: "id") @extends {
+    id: ID @external
+    reviews: [Review]
 }
 
 type Review {

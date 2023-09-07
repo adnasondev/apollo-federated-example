@@ -11,6 +11,7 @@
     "npm": ">=9.5.0"
   },
   "devDependencies": {
+    "@apollo/rover": "^0.18.1",
     "@types/node": "^18.16.3",
     "editorconfig": "^1.0.2",
     "git-commit-msg-linter": "^4.10.0",
